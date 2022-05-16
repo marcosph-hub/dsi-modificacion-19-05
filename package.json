@@ -22,6 +22,7 @@
   "homepage": "https://github.com/ULL-ESIT-INF-DSI-2122/modi16-05-alu0101068855#readme",
   "dependencies": {
     "mongodb": "^3.7.3",
+    "mongoose": "^5.13.14",
     "typescript": "^4.6.4"
   },
   "devDependencies": {
