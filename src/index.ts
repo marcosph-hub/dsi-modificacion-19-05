@@ -17,6 +17,7 @@ interface UserInterface extends Document {
   email: string,
   contraseña: string
 }
+
 const UserSchema = new Schema<UserInterface>({
   nombre: {
     type: String,
