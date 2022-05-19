@@ -95,7 +95,7 @@ export function SearchUser() {
         resolve(result);
       }
     }).catch((error) => {
-      reject(error)
+      reject(error) //bucle. gestionar de otra forma
     });
   });
 }
