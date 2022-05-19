@@ -10,12 +10,13 @@ connect('mongodb://127.0.0.1:27017/dsi-assessment', {
   console.log('Something went wrong when conecting to the database');
 });
 
-interface UserInterface extends Document {
+export interface UserInterface extends Document {
   nombre: string,
   apellidos: string,
   edad: number,
   email: string,
-  contraseña: string
+  asignaturas: string,// 'dsi'|'seguridad'|'uya'
+  NIF: string
 }
 
 const UserSchema = new Schema<UserInterface>({
@@ -29,62 +30,94 @@ const UserSchema = new Schema<UserInterface>({
   },
   edad: {
     type: Number,
-    required: true,
+    required:true
   },
   email: {
     type: String,
-    required: true,
-    unique: true,
+    required:true
   },
-  contraseña: {
+  asignaturas: {
     type: String,
-    required: true,
+    required:true
+    //enum: ['dsi', 'seguridad', 'uya'],
+  },
+  NIF: {
+    type: String,
+    required:true
   }
 });
+
 
 const User = model<UserInterface>('User', UserSchema);
 
 const user = new User({
-  nombre: 'Juan',
-  apellidos: 'Sánchez Gutiérrez',
-  edad: 24,
-  email: 'alu0101068853@ull.edu.es',
-  contraseña: '1234'
+  nombre: 'Marcos',
+  apellidos: 'Padilla',
+  edad: 22,
+  email: 'alu0101045177@ull.edu.es',
+  asignaturas: 'dsi',
+  NIF: '0000000A'
 });
+
 
 /**
  * Añadir usuario
  */
+/*
 user.save().then((result) => {
   console.log(result);
 }).catch((error) => {
   console.log(error);
 });
+*/
 
-/**
- * Buscar usuario
-User.findOne({email: "alu0101068855@ull.edu.es"}).then((result) => {
-  console.log(result);
-}).catch((error) => {
-  console.log(error);
-});
- */
 
-/**
- * Actualizar usuario 
-User.updateOne({email: "alu0101068855@ull.edu.es", nombre: "Paco", apellidos: "Acosta Abreu"}).then((result) => {
-  console.log(result);
-}).catch((error) => {
-  console.log(error);
-});
- */
+export function AddUser() {
+  //const DBRESULT = new Promise<UserInterface>((resolve,reject) => {
+  return new Promise<UserInterface>((resolve,reject) => {
 
-/**
- * Eliminar usuario
-User.deleteOne({email: "alu0101068855@ull.edu.es"}).then((result) => {
-  console.log(result);
-}).catch((error) => {
-  console.log(error);
-});
- */
 
+    user.save().then((result) => {
+      resolve(result);
+    }).catch((error) => {
+      reject(error);
+    });
+  });
+}
+
+export function SearchUser() {
+
+  return new Promise<UserInterface>((resolve,reject) => {
+    User.findOne({email: "alu010104577@ull.edu.es"}).then((result) => {
+      if(result == null) {
+        reject(result);
+      } else {
+        resolve(result);
+      }
+    }).catch((error) => {
+      reject(error)
+    });
+  });
+}
+
+export function UpdateUse() {
+  User.updateOne({email: "alu0101068855@ull.edu.es", nombre: "Paco", apellidos: "Acosta Abreu"}).then((result) => {
+    console.log(result);
+  }).catch((error) => {
+    console.log(error);
+  });
+}
+
+export function RemoveUser() {
+  User.deleteOne({email: "alu0101068855@ull.edu.es"}).then((result) => {
+    console.log(result);
+  }).catch((error) => {
+    console.log(error);
+  });
+}
+
+
+
+
+
+SearchUser();
